@@ -5,10 +5,14 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
 )
+
+const commentComa = "#"
 
 func main() {
 	Configure(".env")
+	fmt.Println(os.Getenv("SOME"))
 }
 
 func Configure(path string) error {
@@ -18,7 +22,20 @@ func Configure(path string) error {
 	}
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		fmt.Println(scanner.Text())
+		line := scanner.Text()
+
+		index := strings.Index(line, commentComa)
+		if index != -1 {
+			lineParsed := strings.Split(line, "#")
+			if len(lineParsed) < 1 {
+				continue
+			}
+
+			v := strings.Split(lineParsed[0], "=")
+			if len(v[1]) > 1 {
+				os.Setenv(v[0], v[1])
+			}
+		}
 	}
 
 	err = scanner.Err()
