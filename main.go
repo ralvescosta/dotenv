@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"errors"
+	"fmt"
 	"os"
 	"strings"
 )
@@ -14,7 +15,7 @@ func main() {}
 func Configure(path string) error {
 	file, err := os.Open(path)
 	if err != nil {
-		return errors.New("error while opening env file")
+		return errors.New(fmt.Sprintf("error while opening env file: %v", err))
 	}
 	defer func() error {
 		if err = file.Close(); err != nil {
@@ -47,7 +48,7 @@ func Configure(path string) error {
 
 	err = scanner.Err()
 	if err != nil {
-		return errors.New("error while reading env file")
+		return errors.New(fmt.Sprintf("error while reading env file: %v", err))
 	}
 
 	return nil
