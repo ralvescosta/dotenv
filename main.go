@@ -3,23 +3,23 @@ package main
 import (
 	"bufio"
 	"errors"
-	"fmt"
 	"os"
 	"strings"
 )
 
 const commentComa = "#"
 
-func main() {
-	Configure(".env")
-	fmt.Println(os.Getenv("SOME"))
-}
-
 func Configure(path string) error {
 	file, err := readFile(path)
 	if err != nil {
 		return errors.New("error while opening env file")
 	}
+	defer func() error {
+		if err = file.Close(); err != nil {
+			return err
+		}
+		return nil
+	}()
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -27,7 +27,7 @@ func Configure(path string) error {
 		index := strings.Index(line, commentComa)
 		if index != -1 {
 			lineParsed := strings.Split(line, "#")
-			if len(lineParsed) < 1 {
+			if len(lineParsed[0]) < 1 {
 				continue
 			}
 
@@ -35,6 +35,11 @@ func Configure(path string) error {
 			if len(v[1]) > 1 {
 				os.Setenv(v[0], v[1])
 			}
+			continue
+		}
+		v := strings.Split(line, "=")
+		if len(v[1]) > 1 {
+			os.Setenv(v[0], v[1])
 		}
 	}
 
@@ -51,12 +56,6 @@ func readFile(path string) (*os.File, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer func() error {
-		if err = file.Close(); err != nil {
-			return err
-		}
-		return nil
-	}()
 
 	return file, nil
 }
