@@ -9,6 +9,8 @@ import (
 
 const commentComa = "#"
 
+func main() {}
+
 func Configure(path string) error {
 	file, err := readFile(path)
 	if err != nil {
