@@ -1,4 +1,4 @@
-package main
+package dotenv
 
 import (
 	"bufio"
@@ -9,8 +9,6 @@ import (
 
 const comment = "#"
 const separator = "="
-
-func main() {}
 
 func Configure(path string) error {
 	file, err := os.Open(path)
