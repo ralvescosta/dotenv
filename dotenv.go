@@ -33,14 +33,14 @@ func Configure(path string) error {
 			}
 
 			v := strings.Split(parsed[0], separator)
-			if len(v[1]) > 1 {
-				os.Setenv(v[0], v[1])
+			if len(v) == 2 && v[1] != "" && v[1] != " " {
+				os.Setenv(strings.TrimSpace(v[0]), strings.TrimSpace(v[1]))
 			}
 			continue
 		}
 		v := strings.Split(line, separator)
-		if len(v[1]) > 1 {
-			os.Setenv(v[0], v[1])
+		if v[1] != "" && v[1] != " " {
+			os.Setenv(strings.TrimSpace(v[0]), strings.TrimSpace(v[1]))
 		}
 	}
 
