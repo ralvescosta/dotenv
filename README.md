@@ -1,6 +1,10 @@
 # Simple Go DotEnv Package
 
-### How we can use
+### Get Started
+
+```bash
+go get -u github.com/ralvescosta/dotenv
+```
 
 ```golang
 package main
