@@ -24,6 +24,7 @@ func Configure(path string) error {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
+		line = strings.ReplaceAll(line, "\"", "")
 		if line == "" {
 			continue
 		}
