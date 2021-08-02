@@ -23,8 +23,11 @@ func Configure(path string) error {
 	}()
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		line := scanner.Text()
-
+		line := strings.TrimSpace(scanner.Text())
+		line = strings.ReplaceAll(line, "\"", "")
+		if line == "" {
+			continue
+		}
 		index := strings.Index(line, comment)
 		if index != -1 {
 			parsed := strings.Split(line, comment)
