@@ -1,10 +1,16 @@
-# Simple Go DotEnv Package
+# DotEnv Package
 
-### Get Started
+This GoLang package was create to handle only .env files. 
+
+The idea of ​​this package is to get the variables from the file and register them in the variable runtime environments.
+
+### Installation
 
 ```bash
 go get -u github.com/ralvescosta/dotenv
 ```
+
+### Example
 
 ```golang
 package main
