@@ -13,11 +13,11 @@ const separator = "="
 func Configure(path string) error {
 	file, err := os.Open(path)
 	if err != nil {
-		return fmt.Errorf("error while opening env file: %v", err)
+		return fmt.Errorf("[DotEnv::Configure] - error while opening the file: %v", err)
 	}
 	defer func() error {
 		if err = file.Close(); err != nil {
-			return err
+			return fmt.Errorf("[DotEnv::Configure] - error while close the file: %v", err)
 		}
 		return nil
 	}()
@@ -49,7 +49,7 @@ func Configure(path string) error {
 
 	err = scanner.Err()
 	if err != nil {
-		return fmt.Errorf("error while reading env file: %v", err)
+		return fmt.Errorf("[DotEnv::Configure] - error while reading env file: %v", err)
 	}
 
 	return nil

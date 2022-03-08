@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestGetEnvFile_Correctly(t *testing.T) {
+func Test_Configure_GetEnvFile_Correctly(t *testing.T) {
 	Configure("./examples/.env")
 
 	envTest := os.Getenv("ENV_TEST")
@@ -22,5 +22,13 @@ func TestGetEnvFile_Correctly(t *testing.T) {
 
 	if envWithCommented != "commented" {
 		t.Error("env ENV_WITH_COMMENTED must contain 'commented' string")
+	}
+}
+
+func Test_Configure_ReturnErr_If_File_Dont_Exist(t *testing.T) {
+	err := Configure("/examples/.wrongfile")
+
+	if err == nil {
+		t.Error("env should return error when file do not exist")
 	}
 }
